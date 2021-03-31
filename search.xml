@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>数独</title>
+      <link href="2021/03/31/algorithm/others/shudu/"/>
+      <url>2021/03/31/algorithm/others/shudu/</url>
+      
+        <content type="html"><![CDATA[<h3 id="随便写的解决数独问题程序"><a href="#随便写的解决数独问题程序" class="headerlink" title="随便写的解决数独问题程序"></a>随便写的解决数独问题程序</h3><pre class=" language-c++"><code class="language-c++">#include <iostream>#include <cstring>using namespace std;const int N=100;int map[N][N];bool raw[N][N];bool cal[N][N];bool belong[N][N];bool judge() &#123;    for(int i=0;i<9;i++) &#123;        for(int j=0;j<9;j++) &#123;            if(!map[i][j]) return false;        &#125;    &#125;    return true;&#125;bool dfs(int x,int y) &#123;    if(x>=9) &#123;        if(judge()) &#123;            for(int i=0;i<9;i++) &#123;                for(int j=0;j<9;j++) &#123;                    cout<<map[i][j]<<" ";                &#125;                cout<<endl;            &#125;        &#125;        cout<<endl;        return true;    &#125;    int y1=(y+1)%9;    int x1=x+(y+1)/9;    int b=3*(x/3)+y/3;    if(map[x][y]) if(dfs(x1,y1)) return true;    for(int i=1;i<=9;i++) &#123;        if(!map[x][y] && !belong[b][i] && !raw[x][i] && !cal[y][i]) &#123;            map[x][y]=i;            belong[b][i]=true;            raw[x][i]=true;            cal[y][i]=true;            if(dfs(x1,y1)) return true;            map[x][y]=0;            belong[b][i]=false;            raw[x][i]=false;            cal[y][i]=false;        &#125;    &#125;    return false;&#125;int main() &#123;    for(int i=0;i<9;i++) &#123;        for(int j=0;j<9;j++) &#123;            char c;            cin>>c;            if(c>='1' && c<='9') &#123;                map[i][j]=c-'0';                raw[i][map[i][j]]=true;                cal[j][map[i][j]]=true;                belong[3*(i/3)+j/3][map[i][j]]=true;            &#125;        &#125;    &#125;    dfs(0,0);    return 0;&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+          <category> 杂项 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 杂项 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>hexo教程-每日一言 &amp;&amp; 古诗</title>
       <link href="2021/03/08/hexo-sentence/"/>
       <url>2021/03/08/hexo-sentence/</url>
