@@ -9,7 +9,7 @@
   
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="hexo教程-每日一言 &amp;&amp; 古诗, 算法,hexo,learning">
+    <meta name="keywords" content="Lcs+路径回溯, 算法,hexo,learning">
     <meta name="description" content="KEEP MOVING">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -21,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>hexo教程-每日一言 &amp;&amp; 古诗 | Hqscesz</title>
+    <title>Lcs+路径回溯 | Hqscesz</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -375,7 +375,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">hexo教程-每日一言 &amp;&amp; 古诗</h1>
+                    <h1 class="description center-align post-title">Lcs+路径回溯</h1>
                 </div>
             </div>
         </div>
@@ -499,6 +499,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -506,7 +515,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-08
+                    2021-04-10
                 </div>
                 
 
@@ -515,14 +524,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4
+                    464
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -547,7 +556,74 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>一会在更</p>
+                <h3 id="HDU-1503"><a href="#HDU-1503" class="headerlink" title="HDU 1503"></a>HDU 1503</h3><h5>最长公共子序列 + 路径回溯</h5>
+
+<p>题意：</p>
+<blockquote>
+<p>给定两个字符串，合并成一个字符串，合并成的这个字符串同时也能分解成原来的两个字符串</p>
+</blockquote>
+<p>例如：</p>
+<blockquote>
+<p><code>apple peach</code></p>
+<p>公共子序列为<code>pe</code>所以要使得两个原本的顺序不变的话新字符串就为<code>appleach</code></p>
+<p>并非<del><code>aplpeach</code></del></p>
+</blockquote>
+<p>解析：</p>
+<blockquote>
+<p>回溯法找新字符串也就是回溯路径并输出。</p>
+<p>我们知道i,j由i-1,j-1    or    i-1,j    or    i,j-1这三种状态转移而来，注意边界值的选取，假设在i,j处不相同，假设在i-1,j处取到最大值，那就说明，1<del>i-1,1</del>j这两个字符串有最大子序列，所以第i个字符单了出来，同时保证顺序唯一，就要递归i-1,j位置，最后输出第i个位置的字符。呼~~~，有点乱，哈哈哈哈哈哈(￣▽￣)~*。</p>
+</blockquote>
+<p>代码：</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstdio></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token number">110</span><span class="token punctuation">]</span><span class="token punctuation">,</span>s2<span class="token punctuation">[</span><span class="token number">110</span><span class="token punctuation">]</span><span class="token punctuation">,</span>s<span class="token punctuation">[</span><span class="token number">220</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> dp<span class="token punctuation">[</span><span class="token number">220</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">220</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> vis<span class="token punctuation">[</span><span class="token number">220</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">220</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span><span class="token keyword">int</span> j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">==</span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> j<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>vis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>i<span class="token number">-1</span><span class="token punctuation">,</span>j<span class="token number">-1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cout<span class="token operator">&lt;&lt;</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>vis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>i<span class="token number">-1</span><span class="token punctuation">,</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cout<span class="token operator">&lt;&lt;</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>vis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token number">-1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cout<span class="token operator">&lt;&lt;</span>s2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">~</span><span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%s%s"</span><span class="token punctuation">,</span>s1<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>s2<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>dp<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span> dp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>vis<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span> vis<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> len1<span class="token operator">=</span><span class="token function">strlen</span><span class="token punctuation">(</span>s1<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> len2<span class="token operator">=</span><span class="token function">strlen</span><span class="token punctuation">(</span>s2<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>len1<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> vis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>len2<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> vis<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>len1<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>len2<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span>s2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+                    vis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">>=</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    vis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    vis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>len1<span class="token punctuation">,</span>len2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cout<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>自己画的图，将就着看看吧，(●’◡’●)</p>
+<p><img src="https://gitee.com/hqscesz/img/raw/master/img/20210410120454.png"></p>
 
                 
             </div>
@@ -574,7 +650,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://hqscesz.cn/2021/03/08/hexo-sentence/">https://hqscesz.cn/2021/03/08/hexo-sentence/</a>
+                    <a href="https://hqscesz.cn/2021/04/10/algorithm/DP/Lcs_HDU1503/">https://hqscesz.cn/2021/04/10/algorithm/DP/Lcs_HDU1503/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1042,9 +1118,51 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/04/10/algorithm/DP/Lcs_HDU1503/">
+                    <div class="card-image">
+                        
+                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="Lcs+路径回溯">
+                        
+                        <span class="card-title">Lcs+路径回溯</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/03/31/algorithm/others/shudu/">
                     <div class="card-image">
@@ -1061,9 +1179,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-31
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1075,54 +1193,6 @@
                             
                         </span>
                     </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/03/08/hexo-bg-picture/">
-                    <div class="card-image">
-                        
-                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="hexo教程-背景图片修改">
-                        
-                        <span class="card-title">hexo教程-背景图片修改</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            自(网)己(上)琢(抄)磨(的) 各种优化
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-08
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/hexo%E6%95%99%E7%A8%8B/" class="post-category">
-                                    hexo教程
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/hexo/">
-                        <span class="chip bg-color">hexo</span>
-                    </a>
-                    
                 </div>
                 
             </div>
