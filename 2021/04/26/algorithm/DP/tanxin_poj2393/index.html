@@ -524,7 +524,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    515
+                    570
                 </div>
                 
 
@@ -566,44 +566,38 @@
 <p>Output</p>
 <p>* 第 1 行: 第 1 行包含一个整数: 满足当周酸奶需求的最低总成本。 请注意，结果可能大于 32 位整型的范围。</p>
 <p>Sample Input</p>
-<pre><code>4 5
-88 200
-89 400
-97 300
-91 500
-</code></pre>
+<p>4 5<br>88 200<br>89 400<br>97 300<br>91 500</p>
 <p>Sample Output</p>
-<pre><code>126900
-</code></pre>
+<p>126900</p>
 <p>Hint</p>
 <p>输出详解：<br>第一周，生产 200 单位的酸奶并全都交付；第二周，生产 700 单位的酸奶，交付 400 单位的酸奶，存储 300 单位的酸奶；第三周，把存储的 300 单位的酸奶交付出去；第四周，生产 500 单位的酸奶并交付出去。</p>
 </blockquote>
 <p>题解：把仓库的费用也算进去！！！！！！</p>
-<pre class=" language-cPP"><code class="language-cPP">#include <iostream>
-#include <cstring>
-#include <cstdio>
-using namespace std;
-const int maxn=1e4+1;
-const int inf=0x3f3f3f3f;
-typedef long long ll;
-struct node {
-    ll c,y; 
-}nodes[maxn];
-int main() {
-    ll n,s;
-    cin>>n>>s;
-    nodes[0].c=inf;
-    for(int i=1;i<=n;i++) {
-        scanf("%lld%lld",&nodes[i].c,&nodes[i].y);
-    }
-    ll ans=0;
-    for(int i=1;i<=n;i++) {
-        nodes[i].c=min(nodes[i].c,nodes[i-1].c+s);
-        ans+=nodes[i].c*nodes[i].y;
-    }
-    cout<<ans<<endl;
-    return 0;
-}
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstdio></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> maxn<span class="token operator">=</span><span class="token number">1e4</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> inf<span class="token operator">=</span><span class="token number">0x3f3f3f3f</span><span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+<span class="token keyword">struct</span> node <span class="token punctuation">{</span>
+    ll c<span class="token punctuation">,</span>y<span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>nodes<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ll n<span class="token punctuation">,</span>s<span class="token punctuation">;</span>
+    cin<span class="token operator">>></span>n<span class="token operator">>></span>s<span class="token punctuation">;</span>
+    nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>c<span class="token operator">=</span>inf<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%lld%lld"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>nodes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>c<span class="token punctuation">,</span><span class="token operator">&amp;</span>nodes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    ll ans<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        nodes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>c<span class="token operator">=</span><span class="token function">min</span><span class="token punctuation">(</span>nodes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>c<span class="token punctuation">,</span>nodes<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>c<span class="token operator">+</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ans<span class="token operator">+</span><span class="token operator">=</span>nodes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>c<span class="token operator">*</span>nodes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    cout<span class="token operator">&lt;&lt;</span>ans<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 
                 
@@ -1367,7 +1361,7 @@ int main() {
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">3k</span>&nbsp;字
+                class="white-color">3.1k</span>&nbsp;字
             
             
             
