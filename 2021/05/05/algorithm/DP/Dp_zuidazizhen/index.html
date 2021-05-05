@@ -9,7 +9,7 @@
   
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="DP学习, 算法,hexo,learning">
+    <meta name="keywords" content="最大子矩阵, 算法,hexo,learning">
     <meta name="description" content="KEEP MOVING">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -21,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>DP学习 | Hqscesz</title>
+    <title>最大子矩阵 | Hqscesz</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -375,7 +375,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">DP学习</h1>
+                    <h1 class="description center-align post-title">最大子矩阵</h1>
                 </div>
             </div>
         </div>
@@ -515,7 +515,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-11
+                    2021-05-05
                 </div>
                 
 
@@ -524,7 +524,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    50
+                    401
                 </div>
                 
 
@@ -556,7 +556,47 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-确定状态-两个核心-1最后一步-2化成子问题"><a href="#1-确定状态-两个核心-1最后一步-2化成子问题" class="headerlink" title="1.确定状态(两个核心:1最后一步 2化成子问题)"></a>1.确定状态(两个核心:1最后一步 2化成子问题)</h2><h2 id="2转移方程"><a href="#2转移方程" class="headerlink" title="2转移方程"></a>2转移方程</h2><h2 id="3开始和边界条件"><a href="#3开始和边界条件" class="headerlink" title="3开始和边界条件"></a>3开始和边界条件</h2><h2 id="4计算顺序"><a href="#4计算顺序" class="headerlink" title="4计算顺序"></a>4计算顺序</h2><p>先把<a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_19594515/article/details/102738781?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&dist_request_id=1330147.23313.16181296860900951&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control">博客</a>打上有时间在自己总结</p>
+                <h3 id="HDU-1559"><a href="#HDU-1559" class="headerlink" title="HDU 1559"></a>HDU 1559</h3><p>给你一个m×n的整数矩阵，在上面找一个x×y的子矩阵，使子矩阵中所有元素的和最大。</p>
+<p>Input</p>
+<p>输入数据的第一行为一个正整数T，表示有T组测试数据。每一组测试数据的第一行为四个正整数m,n,x,y（0&lt;m,n&lt;1000 AND 0&lt;x&lt;=m AND 0&lt;y&lt;=n），表示给定的矩形有m行n列。接下来这个矩阵，有m行，每行有n个不大于1000的正整数。</p>
+<p>Output</p>
+<p>对于每组数据，输出一个整数，表示子矩阵的最大和。</p>
+<p>Sample Input</p>
+<blockquote>
+<p>1<br>4 5 2 2<br>3 361 649 676 588<br>992 762 156 993 169<br>662 34 638 89 543<br>525 165 254 809 280</p>
+</blockquote>
+<p>Sample Output</p>
+<blockquote>
+<p>2474</p>
+</blockquote>
+<p>由题意可看出来(其实是抄的)dp[i][j]代表i、j矩阵的和，那这个和是多少呢？，就是i、j的值加上两边矩阵的值再减去中间的(因为中间重复了一次)    dp[i][j]+=dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1]</p>
+<p>所以x、y矩阵就很好表示了:     dp[i][j]-dp[i-y][j]-dp[i][j-x]+dp[i-y][j-x]</p>
+<p>看代码：</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> maxn<span class="token operator">=</span><span class="token number">1e3</span><span class="token operator">+</span><span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> dp<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> t<span class="token punctuation">,</span>n<span class="token punctuation">,</span>m<span class="token punctuation">,</span>x<span class="token punctuation">,</span>y<span class="token punctuation">;</span>
+    cin<span class="token operator">>></span>t<span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>t<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> ans<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+        cin<span class="token operator">>></span>m<span class="token operator">>></span>n<span class="token operator">>></span>x<span class="token operator">>></span>y<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>m<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span><span class="token operator">-</span>dp<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">-</span>y<span class="token operator">>=</span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> j<span class="token operator">-</span>x<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    ans<span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>ans<span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">-</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span>y<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">-</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span>x<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span>y<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        cout<span class="token operator">&lt;&lt;</span>ans<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
 
                 
             </div>
@@ -583,7 +623,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://hqscesz.cn/2021/04/11/algorithm/DP/Dp_learnDP/">https://hqscesz.cn/2021/04/11/algorithm/DP/Dp_learnDP/</a>
+                    <a href="https://hqscesz.cn/2021/05/05/algorithm/DP/Dp_zuidazizhen/">https://hqscesz.cn/2021/05/05/algorithm/DP/Dp_zuidazizhen/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1051,28 +1091,29 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/04/12/algorithm/DP/Dp_erweidp_hdu2845/">
+                <a href="/2021/05/05/algorithm/DP/Dp_zuidazizhen/">
                     <div class="card-image">
                         
-                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="二维DP">
+                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="最大子矩阵">
                         
-                        <span class="card-title">二维DP</span>
+                        <span class="card-title">最大子矩阵</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            简单的二维
+                            Geeze最大子矩阵
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1085,6 +1126,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -1095,23 +1137,23 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/11/algorithm/DP/Dp_dashu_hdu1502/">
+                <a href="/2021/05/04/algorithm/DP/Dp_mziduanhe/">
                     <div class="card-image">
                         
-                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="大数DP">
+                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="m段子段和">
                         
-                        <span class="card-title">大数DP</span>
+                        <span class="card-title">m段子段和</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大数DP
+                            m子段和
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-04
                             </span>
                         <span class="publish-author">
                             
