@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>数据库学习</title>
+      <link href="2021/05/15/SQL/sqlsever/"/>
+      <url>2021/05/15/SQL/sqlsever/</url>
+      
+        <content type="html"><![CDATA[<h3 id="学数据库的坑"><a href="#学数据库的坑" class="headerlink" title="学数据库的坑"></a>学数据库的坑</h3><h1 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h1><h5 id="1、解决修改表结构，添加外键时出现“约束冲突”的错误"><a href="#1、解决修改表结构，添加外键时出现“约束冲突”的错误" class="headerlink" title="1、解决修改表结构，添加外键时出现“约束冲突”的错误"></a>1、解决修改表结构，添加外键时出现“约束冲突”的错误</h5><p>由于表要修改外键啥的，用<code>alter</code>修改时有时候会报错如下：</p><blockquote><p>ALTER TABLE 语句与 COLUMN FOREIGN KEY 约束 ‘’ 冲突。该冲突发生于数据库 “<em><strong>”，表 “</strong></em>”, column “***”。</p></blockquote><p>很简单就是参照表上的数据在被参照表上不存在(也就是sc表中的sno在student表中不存在),<strong>无法建立实际上的外键关系，这是引用完整性的要求!</strong></p><p>**PS:**正常情况下，如何使用了“强制外键约束”，则不会出现上面的问题。因为存在外键引用，是无法删除被引用表某些数据的。如果将“强制外键约束”选项是“否”。则可以删除相应的数据。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>最大子矩阵</title>
       <link href="2021/05/05/algorithm/DP/Dp_zuidazizhen/"/>
       <url>2021/05/05/algorithm/DP/Dp_zuidazizhen/</url>

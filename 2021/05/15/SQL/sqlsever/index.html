@@ -9,7 +9,7 @@
   
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="上升序列, 算法,hexo,learning">
+    <meta name="keywords" content="数据库学习, 算法,hexo,learning">
     <meta name="description" content="KEEP MOVING">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -21,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>上升序列 | Hqscesz</title>
+    <title>数据库学习 | Hqscesz</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -375,7 +375,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">上升序列</h1>
+                    <h1 class="description center-align post-title">数据库学习</h1>
                 </div>
             </div>
         </div>
@@ -502,8 +502,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                算法
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
                             </a>
                         
                     </div>
@@ -515,7 +515,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-02
+                    2021-05-15
                 </div>
                 
 
@@ -524,14 +524,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    669
+                    205
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
 
@@ -556,48 +556,12 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Poj-3666"><a href="#Poj-3666" class="headerlink" title="Poj 3666"></a>Poj 3666</h3><p>一条笔直的土路连接着FJ农场上的两个田地，但它改变的海拔比FJ想要的要多。他的牛不介意爬上或下一个斜坡，但他们不喜欢交替的山丘和山谷。FJ想要增加和清除道路上的泥土，这样它就变成了一个单调的斜坡(无论是向上倾斜还是向下倾斜)。 给你N个整数A1, … , AN (1 ≤ N ≤ 2,000) 描述海拔(0 ≤ Ai ≤ 1,000,000,000) 在路上N个等距的位置，从第一个字段开始，到另一个字段结束。FJ想把这些高度调整成一个新的序列B1, . … , BN 这要么是不增加的，要么是不减少的。由于增加或清除沿路任何位置的污物所需的费用相同，因此修路的总费用为 | A 1 - B 1| + | A 2 - B 2| + … + | AN - BN | 请计算他的道路分级的最低费用，使它成为一个连续的斜坡。FJ高兴地告诉你，有符号的32位整数肯定可以用来计算答案。</p>
-<p>Input</p>
-<p>* Line 1: A single integer: <em>N</em><br>* Lines 2..<em>N</em>+1: Line <em>i</em>+1 contains a single integer elevation: <em>Ai</em></p>
-<p>Output</p>
-<p>* 第1行：一个整数，它是FJ对其土路进行分级的最小成本，因此它在高程上不会增加或减少。</p>
-<p>Sample Input</p>
-<p>7<br>1<br>3<br>2<br>4<br>5<br>3<br>9</p>
-<p>Sample Output</p>
-<p>3</p>
-<p>使得序列非降，可以这么认为：<strong>dp[i][j]<strong>代表：</strong>前i</strong>个元素，第j大所花费的代价，定义一个b数组，代表a元素的上升序列（并非改变后的只是将a排个序），我们知道，<strong>第</strong>i个元素，第j大的代价一定是<strong>a[i]-b[j]<strong>，所以问题就简单了，只需要将</strong>j以前的最小的代价</strong>，加上当前i的代价就是我们要的答案，（因为，第i个元素，第j大，就要从前i-1给元素中找到不大于j的，才能保证递增，又要最小，所以找最小的满足条件的值就可，即: min(dp[i-1][k],    k&gt;=1 &amp;&amp; k&lt;=j)）,最后在扫一遍找到最小的就okk了</p>
-<p>上代码（可以用滚动数组优化）</p>
-<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;algorithm></span></span>
-<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstdio></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">const</span> <span class="token keyword">int</span> maxn<span class="token operator">=</span><span class="token number">2e3</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> <span class="token keyword">int</span> inf<span class="token operator">=</span><span class="token number">0x3f3f3f3f</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> dp<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span>a<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span>b<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> n<span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">~</span><span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            b<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token function">sort</span><span class="token punctuation">(</span>b<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>b<span class="token operator">+</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">int</span> tmp<span class="token operator">=</span>inf<span class="token punctuation">;</span>
-            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                tmp<span class="token operator">=</span><span class="token function">min</span><span class="token punctuation">(</span>tmp<span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>tmp<span class="token operator">+</span><span class="token function">abs</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span>b<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">int</span> ans<span class="token operator">=</span>inf<span class="token punctuation">;</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            ans<span class="token operator">=</span><span class="token function">min</span><span class="token punctuation">(</span>ans<span class="token punctuation">,</span>dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        cout<span class="token operator">&lt;&lt;</span>ans<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
+                <h3 id="学数据库的坑"><a href="#学数据库的坑" class="headerlink" title="学数据库的坑"></a>学数据库的坑</h3><h1 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h1><h5 id="1、解决修改表结构，添加外键时出现“约束冲突”的错误"><a href="#1、解决修改表结构，添加外键时出现“约束冲突”的错误" class="headerlink" title="1、解决修改表结构，添加外键时出现“约束冲突”的错误"></a>1、解决修改表结构，添加外键时出现“约束冲突”的错误</h5><p>由于表要修改外键啥的，用<code>alter</code>修改时有时候会报错如下：</p>
+<blockquote>
+<p>ALTER TABLE 语句与 COLUMN FOREIGN KEY 约束 ‘’ 冲突。该冲突发生于数据库 “<em><strong>”，表 “</strong></em>”, column “***”。</p>
+</blockquote>
+<p>很简单就是参照表上的数据在被参照表上不存在(也就是sc表中的sno在student表中不存在),<strong>无法建立实际上的外键关系，这是引用完整性的要求!</strong></p>
+<p>**PS:**正常情况下，如何使用了“强制外键约束”，则不会出现上面的问题。因为存在外键引用，是无法删除被引用表某些数据的。如果将“强制外键约束”选项是“否”。则可以删除相应的数据。</p>
 
                 
             </div>
@@ -624,7 +588,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://hqscesz.cn/2021/05/02/algorithm/DP/Dp_shangsheng_poj3666/">https://hqscesz.cn/2021/05/02/algorithm/DP/Dp_shangsheng_poj3666/</a>
+                    <a href="https://hqscesz.cn/2021/05/15/SQL/sqlsever/">https://hqscesz.cn/2021/05/15/SQL/sqlsever/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1092,40 +1056,42 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/05/03/algorithm/Flow/F_mincost_lg3381/">
+                <a href="/2021/05/15/SQL/sqlsever/">
                     <div class="card-image">
                         
-                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="最小费用流板子">
+                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="数据库学习">
                         
-                        <span class="card-title">最小费用流板子</span>
+                        <span class="card-title">数据库学习</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            最小费
+                            SQLserver
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -1136,23 +1102,23 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/29/algorithm/LCA/Lca_moban_poj1330/">
+                <a href="/2021/05/05/algorithm/DP/Dp_zuidazizhen/">
                     <div class="card-image">
                         
-                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="LCA模板">
+                        <img src="https://random.52ecy.cn/randbg.php" class="responsive-img" alt="最大子矩阵">
                         
-                        <span class="card-title">LCA模板</span>
+                        <span class="card-title">最大子矩阵</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            模板
+                            Geeze最大子矩阵
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-05
                             </span>
                         <span class="publish-author">
                             
